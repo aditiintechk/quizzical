@@ -10,8 +10,6 @@ function App() {
 		setIsClicked(!isClicked)
 	}
 
-	console.log(isClicked)
-
 	useEffect(() => {
 		if (isClicked) {
 			fetch(
@@ -29,32 +27,34 @@ function App() {
 		}
 	}, [isClicked])
 
-	function getAnswersArray() {
+	function renderQuizElements() {
 		try {
 			if (quizData.length > 0) {
-				let quizArr = quizData[0]
-				console.log('correct answer', quizArr.correct_answer)
-				console.log('incorrect answers', quizArr.incorrect_answers)
-				let answers = quizArr.incorrect_answers
-				answers.push(quizArr.correct_answer)
-				return answers
+				const quizElements = quizData.map((item, index) => {
+					let answers = item.incorrect_answers
+					if (answers.length <= 3) answers.push(item.correct_answer)
+					return (
+						<Quiz
+							key={index}
+							question={item.question}
+							correctAnswer={item.correct_answer}
+							answers={answers}
+						/>
+					)
+				})
+
+				return quizElements
 			}
 		} catch (error) {
-			console.log('there was a problem')
+			console.log('fetch operation failed, try again!')
 		}
 	}
 
-	getAnswersArray()
-
 	return (
-		<main>
+		<main className='main'>
 			{isClicked ? (
 				<section className='quiz'>
-					<Quiz />
-					{/* <Quiz />
-					<Quiz />
-					<Quiz />
-					<Quiz /> */}
+					{renderQuizElements()}
 					<section className='check-section'>
 						<button className='check-btn'>Check answers</button>
 					</section>
