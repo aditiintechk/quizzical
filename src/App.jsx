@@ -100,6 +100,15 @@ function App() {
 
 	console.log(selectedAnswers)
 
+	function getCorrectAnswers() {
+		let correctAnswersArr = quizData.map((item) => ({
+			[he.decode(item.question)]: he.decode(item.correct_answer),
+		}))
+		return correctAnswersArr
+	}
+
+	console.log(getCorrectAnswers())
+
 	function renderQuizElements() {
 		try {
 			if (quizData.length > 0) {
@@ -111,7 +120,6 @@ function App() {
 							key={index + 1}
 							questionId={index + 1}
 							question={item.question}
-							correctAnswer={item.correct_answer}
 							answers={answers}
 							handleChange={(event) =>
 								handleChange(item.question, event)
