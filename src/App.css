@@ -1,9 +1,9 @@
 #root {
-	width: 700px;
-	height: 700px;
+	max-width: 720px;
 	margin: 0 auto;
 	text-align: center;
 	margin-top: 2rem;
+	padding: 1.5em 0;
 	border-radius: 5px;
 	background-image: url('../src/assets/background-img.jpg');
 	background-position: cover;
@@ -31,7 +31,8 @@ h2 {
 	margin-bottom: 1.5em;
 }
 
-.start-btn {
+.start-btn,
+.check-btn {
 	background-color: #4d5b9e;
 	color: #f5f7fb;
 	border: none;
@@ -43,6 +44,51 @@ h2 {
 	cursor: pointer;
 }
 
-.start-btn:hover {
+.start-btn:hover,
+.check-btn:hover {
 	opacity: 0.95;
+}
+
+/* Quiz component */
+.quiz-question {
+	font-weight: 600;
+	border-bottom: 1px solid #c5cbec;
+	padding-bottom: 1em;
+}
+
+.question {
+	font-size: 1.2rem;
+	margin: 0.8em;
+}
+
+.multiple-choice {
+	border: none;
+	outline: none;
+}
+
+input[type='radio'] {
+	display: none;
+}
+
+.multiple-choice label {
+	display: inline-block;
+	padding: 0.1em 1.4em;
+	margin: 0 0.5em;
+	border: 1px solid #4d5b9e;
+	border-radius: 10px;
+	color: #293264;
+	cursor: pointer;
+}
+
+/* D6DBF5, 293264*/
+
+.multiple-choice label:hover,
+.multiple-choice label:active,
+.multiple-choice label:focus {
+	background-color: #d6dbf5;
+	border: 1px solid #d6dbf5;
+}
+
+.check-btn {
+	margin-top: 1.5em;
 }
