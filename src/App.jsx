@@ -3,44 +3,71 @@ import Quiz from './components/Quiz.jsx'
 import './App.css'
 
 function App() {
-	const [questions, setQuestions] = useState([])
+	const [quizData, setQuizData] = useState([])
+	const [isClicked, setIsClicked] = useState(false)
 
-	// useEffect(() => {
-	// 	fetch(
-	// 		'https://opentdb.com/api.php?amount=5&category=31&difficulty=easy&type=multiple'
-	// 	)
-	// 		.then((response) => response.json())
-	// 		.then((data) => setQuestions(data))
-	// }, [])
+	function handleStartBtn() {
+		setIsClicked(!isClicked)
+	}
 
-	// console.log(questions)
+	console.log(isClicked)
 
-	// function handleStartBtn() {
-	// 	setQuestions(['hi'])
-	// }
+	useEffect(() => {
+		if (isClicked) {
+			fetch(
+				'https://opentdb.com/api.php?amount=5&category=31&difficulty=easy&type=multiple'
+			)
+				.then((response) => {
+					if (!response.ok) {
+						console.log(`HTTP error! Status: ${response.status}`)
+					}
+					return response.json()
+				})
+				.then((data) => {
+					setQuizData(data.results)
+				})
+		}
+	}, [isClicked])
+
+	function getAnswersArray() {
+		try {
+			if (quizData.length > 0) {
+				let quizArr = quizData[0]
+				console.log('correct answer', quizArr.correct_answer)
+				console.log('incorrect answers', quizArr.incorrect_answers)
+				let answers = quizArr.incorrect_answers
+				answers.push(quizArr.correct_answer)
+				return answers
+			}
+		} catch (error) {
+			console.log('there was a problem')
+		}
+	}
+
+	getAnswersArray()
 
 	return (
 		<main>
-			{/* {questions.length > 0 ? (
+			{isClicked ? (
 				<section className='quiz'>
-					<h1>Quiz questions here!</h1>
+					<Quiz />
+					{/* <Quiz />
+					<Quiz />
+					<Quiz />
+					<Quiz /> */}
+					<section className='check-section'>
+						<button className='check-btn'>Check answers</button>
+					</section>
 				</section>
 			) : (
 				<section className='start-quiz'>
 					<h1>Quizzical</h1>
 					<h2>An exercise to your brain ⚡!</h2>
-					<button className='start-btn'>Start Quiz</button>
+					<button className='start-btn' onClick={handleStartBtn}>
+						Start Quiz
+					</button>
 				</section>
-			)} */}
-
-			<Quiz />
-			<Quiz />
-			<Quiz />
-			<Quiz />
-			<Quiz />
-			<section className='check-section'>
-				<button className='check-btn'>Check answers</button>
-			</section>
+			)}
 		</main>
 	)
 }
