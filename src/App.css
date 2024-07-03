@@ -1,13 +1,11 @@
 #root {
-	max-width: 700px;
+	max-width: 550px;
 	margin: 0 auto;
 	text-align: center;
 	margin-top: 2rem;
 	padding: 1.5em;
 	border-radius: 5px;
-	background-image: url('../src/assets/background-img.jpg');
-	background-position: cover;
-	background-size: contain;
+	background: #f5f7fb;
 	font-family: 'Karla', sans-serif;
 	color: #293264;
 	display: flex;
@@ -23,18 +21,18 @@ h2 {
 }
 
 h1 {
-	font-size: 2.5rem;
+	font-size: 2rem;
 }
 
 h2 {
-	font-size: 1.2rem;
+	font-size: 1rem;
 	font-weight: 500;
 	margin-bottom: 1.5em;
 }
 
 .main {
 	width: 100%;
-	min-height: 650px;
+	min-height: 550px;
 	display: grid;
 	place-items: center;
 	align-content: center;
@@ -46,7 +44,7 @@ h2 {
 	color: #f5f7fb;
 	border: none;
 	border-radius: 10px;
-	padding: 1em 2.5em;
+	padding: 0.8em 1.5em;
 	outline: none;
 	font-family: inherit;
 	font-size: 1rem;
@@ -62,12 +60,12 @@ h2 {
 .quiz-question {
 	font-weight: 600;
 	border-bottom: 1px solid #c5cbec;
-	padding-bottom: 1em;
+	padding-bottom: 0.5em;
 }
 
 .question {
-	font-size: 1.2rem;
-	margin: 0.8em;
+	font-size: 0.875rem;
+	margin: 0.5em;
 }
 
 .multiple-choice {
@@ -81,12 +79,13 @@ input[type='radio'] {
 
 .multiple-choice label {
 	display: inline-block;
-	padding: 0.1em 1.4em;
+	padding: 0 1em;
 	margin: 0.5em 0.5em;
 	border: 1px solid #4d5b9e;
 	border-radius: 10px;
 	color: #293264;
 	cursor: pointer;
+	font-size: 0.875rem;
 }
 
 /* D6DBF5, 293264*/
@@ -100,4 +99,5 @@ input[type='radio'] {
 
 .check-btn {
 	margin-top: 1.5em;
+	font-size: 0.875rem;
 }
