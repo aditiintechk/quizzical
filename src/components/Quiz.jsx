@@ -1,19 +1,22 @@
 import he from 'he'
 
 export default function Quiz(props) {
-	const { question, correctAnswer, answers } = props
+	const { question, questionId, answers, handleChange } = props
 
 	const answerInputs = answers.map((eachAnswer, index) => {
 		return (
-			<label htmlFor={`answer${index + 1}`}>
+			<div key={eachAnswer} className='radio-input'>
 				<input
 					type='radio'
-					name='answer'
-					id={`answer${index + 1}`}
-					value={`answer${index + 1}`}
+					name={`answer-${questionId}`}
+					id={he.decode(eachAnswer)}
+					value={he.decode(eachAnswer)}
+					onChange={handleChange}
 				/>
-				{he.decode(eachAnswer)}
-			</label>
+				<label htmlFor={he.decode(eachAnswer)}>
+					{he.decode(eachAnswer)}
+				</label>
+			</div>
 		)
 	})
 
