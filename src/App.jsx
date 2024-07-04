@@ -62,6 +62,7 @@ function App() {
 
 	const [isClicked, setIsClicked] = useState(false)
 	const [selectedAnswers, setSelectedAnswers] = useState([])
+	const [isHidden, setIsHidden] = useState(false)
 
 	// function handleStartBtn() {
 	// 	setIsClicked(!isClicked)
@@ -91,14 +92,14 @@ function App() {
 	function handleChange(question, event) {
 		let selectedAnswer = event.target.value
 		setSelectedAnswers((prevSelectedAnswers) => [
+			...prevSelectedAnswers,
 			{
 				[he.decode(question)]: he.decode(selectedAnswer),
 			},
-			...prevSelectedAnswers,
 		])
 	}
 
-	console.log(selectedAnswers)
+	// console.log(selectedAnswers)
 
 	function getCorrectAnswers() {
 		let correctAnswersArr = quizData.map((item) => ({
@@ -107,7 +108,37 @@ function App() {
 		return correctAnswersArr
 	}
 
-	console.log(getCorrectAnswers())
+	// console.log(getCorrectAnswers())
+
+	function getNumberOfCorrectAnswers() {
+		let correctAnswers = getCorrectAnswers()
+		let userEnteredAnswers = selectedAnswers
+
+		let equalCount = 0
+
+		// console.log(correctAnswers, userEnteredAnswers)
+
+		if (correctAnswers.length === userEnteredAnswers.length) {
+			for (let i = 0; i < correctAnswers.length; i++) {
+				if (
+					JSON.stringify(Object.values(correctAnswers[i])) ===
+					JSON.stringify(Object.values(userEnteredAnswers[i]))
+				) {
+					equalCount++
+				}
+			}
+			return equalCount
+		}
+	}
+
+	function handleCheckBtn() {
+		getNumberOfCorrectAnswers()
+		setIsHidden(!isHidden)
+	}
+
+	function handlePlayBtn() {
+		setIsClicked(!isClicked)
+	}
 
 	function renderQuizElements() {
 		try {
@@ -134,13 +165,34 @@ function App() {
 			console.log('fetch operation failed, try again!', error)
 		}
 	}
+	// {isHidden ? 'check-section hidden' : 'check-section'}
+	// {isHidden ? 'play-section' : 'play-section hidden'}
 
 	return (
 		<main className='main'>
 			<section className='quiz'>
 				{renderQuizElements()}
-				<section className='check-section'>
-					<button className='check-btn'>Check answers</button>
+				<section
+					className={
+						isHidden ? 'check-section hidden' : 'check-section'
+					}
+				>
+					<button className='check-btn' onClick={handleCheckBtn}>
+						Check answers
+					</button>
+				</section>
+				<section
+					className={
+						isHidden ? 'result-section' : 'result-section hidden'
+					}
+				>
+					<h2>
+						You scored {getNumberOfCorrectAnswers()}/
+						{getCorrectAnswers().length} correct answers
+					</h2>
+					<button className='play-btn' onClick={handlePlayBtn}>
+						Play again
+					</button>
 				</section>
 			</section>
 		</main>
