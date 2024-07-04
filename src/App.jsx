@@ -5,6 +5,7 @@ import './App.css'
 
 function App() {
 	// const [quizData, setQuizData] = useState([])
+	/* State to hold quiz data */
 	const [quizData, setQuizData] = useState([
 		{
 			type: 'multiple',
@@ -61,6 +62,7 @@ function App() {
 	])
 
 	const [isClicked, setIsClicked] = useState(false)
+	/* State to hold the selected answers */
 	const [selectedAnswers, setSelectedAnswers] = useState([])
 	const [isHidden, setIsHidden] = useState(false)
 
@@ -68,6 +70,7 @@ function App() {
 	// 	setIsClicked(!isClicked)
 	// }
 
+	/* fetch the data (Side effect) with useEffect */
 	// useEffect(() => {
 	// 	if (isClicked) {
 	// 		fetch(
@@ -85,10 +88,7 @@ function App() {
 	// 	}
 	// }, [isClicked])
 
-	// function handleChange() {
-	// 	console.log('hi')
-	// }
-
+	/* Handle the radio input change */
 	function handleChange(question, event) {
 		let selectedAnswer = event.target.value
 		setSelectedAnswers((prevSelectedAnswers) => [
@@ -99,8 +99,7 @@ function App() {
 		])
 	}
 
-	// console.log(selectedAnswers)
-
+	/* collect correct answers in an array */
 	function getCorrectAnswers() {
 		let correctAnswersArr = quizData.map((item) => ({
 			[he.decode(item.question)]: he.decode(item.correct_answer),
@@ -108,15 +107,12 @@ function App() {
 		return correctAnswersArr
 	}
 
-	// console.log(getCorrectAnswers())
-
+	/* Calculate number of questions correctly answered */
 	function getNumberOfCorrectAnswers() {
 		let correctAnswers = getCorrectAnswers()
 		let userEnteredAnswers = selectedAnswers
 
 		let equalCount = 0
-
-		// console.log(correctAnswers, userEnteredAnswers)
 
 		if (correctAnswers.length === userEnteredAnswers.length) {
 			for (let i = 0; i < correctAnswers.length; i++) {
@@ -131,6 +127,7 @@ function App() {
 		}
 	}
 
+	/* Handle Check answers & Play again buttons */
 	function handleCheckBtn() {
 		getNumberOfCorrectAnswers()
 		setIsHidden(!isHidden)
@@ -140,6 +137,7 @@ function App() {
 		setIsClicked(!isClicked)
 	}
 
+	/* render Quiz components */
 	function renderQuizElements() {
 		try {
 			if (quizData.length > 0) {
@@ -165,8 +163,6 @@ function App() {
 			console.log('fetch operation failed, try again!', error)
 		}
 	}
-	// {isHidden ? 'check-section hidden' : 'check-section'}
-	// {isHidden ? 'play-section' : 'play-section hidden'}
 
 	return (
 		<main className='main'>
