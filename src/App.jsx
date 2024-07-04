@@ -1,72 +1,17 @@
 import { useEffect, useState } from 'react'
 import Quiz from './components/Quiz.jsx'
 import he from 'he'
+import _ from 'lodash'
 import './App.css'
 
 function App() {
-	const [quizData, setQuizData] = useState([])
 	/* State to hold quiz data */
-	// const [quizData, setQuizData] = useState([
-	// 	{
-	// 		type: 'multiple',
-	// 		difficulty: 'easy',
-	// 		category: 'Entertainment: Japanese Anime &amp; Manga',
-	// 		question:
-	// 			'In the anime &quot;My Hero Academia&quot;, which character is shown with the ability to manipulate gravity?',
-	// 		correct_answer: 'Uraraka',
-	// 		incorrect_answers: ['Bakugo', 'Deku', 'Asui '],
-	// 	},
-	// 	{
-	// 		type: 'multiple',
-	// 		difficulty: 'easy',
-	// 		category: 'Entertainment: Japanese Anime &amp; Manga',
-	// 		question:
-	// 			'Which anime heavily features music from the genre &quot;Eurobeat&quot;?',
-	// 		correct_answer: 'Initial D',
-	// 		incorrect_answers: [
-	// 			'Wangan Midnight',
-	// 			'Kino no Tabi',
-	// 			'Cowboy Bebop',
-	// 		],
-	// 	},
-	// 	{
-	// 		type: 'multiple',
-	// 		difficulty: 'easy',
-	// 		category: 'Entertainment: Japanese Anime &amp; Manga',
-	// 		question: 'What was Ash Ketchum&#039;s second Pokemon?',
-	// 		correct_answer: 'Caterpie',
-	// 		incorrect_answers: ['Charmander', 'Pikachu', 'Pidgey'],
-	// 	},
-	// 	{
-	// 		type: 'multiple',
-	// 		difficulty: 'easy',
-	// 		category: 'Entertainment: Japanese Anime &amp; Manga',
-	// 		question:
-	// 			'The characters of &quot;Log Horizon&quot; are trapped in what game?',
-	// 		correct_answer: 'Elder Tale',
-	// 		incorrect_answers: ['Sword Art Online', 'Tower Unite', 'Yggdrasil'],
-	// 	},
-	// 	{
-	// 		type: 'multiple',
-	// 		difficulty: 'easy',
-	// 		category: 'Entertainment: Japanese Anime &amp; Manga',
-	// 		question:
-	// 			'Which Pok&eacute;mon and it&#039;s evolutions were banned from appearing in a main role after the Episode 38 Incident?',
-	// 		correct_answer: 'The Porygon Line',
-	// 		incorrect_answers: [
-	// 			'The Pikachu Line',
-	// 			'The Elekid Line',
-	// 			'The Magby Line',
-	// 		],
-	// 	},
-	// ])
-
+	const [quizData, setQuizData] = useState([])
 	const [isClicked, setIsClicked] = useState(false)
 	/* State to hold the selected answers */
 	const [selectedAnswers, setSelectedAnswers] = useState([])
 	const [isHidden, setIsHidden] = useState(false)
 	const [isSubmitted, setIsSubmitted] = useState(false)
-	const [selectedAnswer, setSelectedAnswer] = useState('')
 
 	function handleStartBtn() {
 		setIsClicked(!isClicked)
@@ -93,7 +38,6 @@ function App() {
 	/* Handle the radio input change */
 	function handleChange(question, event) {
 		let selectedAnswer = event.target.value
-		setSelectedAnswer(selectedAnswer)
 		setSelectedAnswers((prevSelectedAnswers) => [
 			...prevSelectedAnswers,
 			{
@@ -114,6 +58,7 @@ function App() {
 	function getNumberOfCorrectAnswers() {
 		let correctAnswers = getCorrectAnswers()
 		let userEnteredAnswers = selectedAnswers
+		console.log(correctAnswers, userEnteredAnswers)
 
 		let equalCount = 0
 

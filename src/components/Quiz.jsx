@@ -1,5 +1,6 @@
 import he from 'he'
-import { useState } from 'react'
+import shuffle from 'lodash/shuffle'
+import { useState, useEffect } from 'react'
 
 export default function Quiz(props) {
 	const {
@@ -12,8 +13,17 @@ export default function Quiz(props) {
 	} = props
 
 	let styles = {}
+	const [shuffledAnswers, setShuffledAnswers] = useState([])
 
-	const answerInputs = answers.map((eachAnswer) => {
+	useEffect(
+		function () {
+			setShuffledAnswers(shuffle(answers))
+		},
+		[question]
+	)
+
+	// const shuffledAnswers = shuffle(answers)
+	const answerInputs = shuffledAnswers.map((eachAnswer) => {
 		if (isSubmitted && he.decode(eachAnswer) === correctAnswer) {
 			styles = {
 				backgroundColor: '#94d7a2',
