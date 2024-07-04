@@ -1,9 +1,31 @@
 import he from 'he'
+import { useState } from 'react'
 
 export default function Quiz(props) {
-	const { question, questionId, answers, handleChange } = props
+	const {
+		question,
+		questionId,
+		answers,
+		correctAnswer,
+		handleChange,
+		isSubmitted,
+	} = props
 
-	const answerInputs = answers.map((eachAnswer, index) => {
+	let styles = {}
+
+	const answerInputs = answers.map((eachAnswer) => {
+		if (isSubmitted && he.decode(eachAnswer) === correctAnswer) {
+			styles = {
+				backgroundColor: '#94d7a2',
+				border: '1px solid #94d7a2',
+			}
+		} else if (isSubmitted && he.decode(eachAnswer) !== correctAnswer) {
+			styles = {
+				backgroundColor: '#F8BCBC',
+				border: '1px solid #F8BCBC',
+			}
+		}
+
 		return (
 			<div key={eachAnswer} className='radio-input'>
 				<input
@@ -13,7 +35,7 @@ export default function Quiz(props) {
 					value={he.decode(eachAnswer)}
 					onChange={handleChange}
 				/>
-				<label htmlFor={he.decode(eachAnswer)}>
+				<label htmlFor={he.decode(eachAnswer)} style={styles}>
 					{he.decode(eachAnswer)}
 				</label>
 			</div>
